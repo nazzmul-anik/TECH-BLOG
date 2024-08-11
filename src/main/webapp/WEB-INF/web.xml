@@ -33,4 +33,13 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>Edit</servlet-name>
+        <servlet-class>org.anik.techblog.servlets.EditServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Edit</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+    
 </web-app>

@@ -87,4 +87,8 @@ public class User {
     public void setProfile(String profile) {
         this.profile = profile;
     }
+
+    public String toString(){
+        return id + " " + name + " " + email + " " + password + " " + gender + " " + about + " " + profile;
+    }
 }

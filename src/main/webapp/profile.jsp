@@ -1,4 +1,5 @@
-<%@ page import="org.anik.techblog.entities.User" %><%--
+<%@ page import="org.anik.techblog.entities.User" %>
+<%@ page import="org.anik.techblog.entities.Message" %><%--
   Created by IntelliJ IDEA.
   User: DCL
   Date: 8/6/2024
@@ -31,6 +32,28 @@
     <script src="JavaScript/myJs.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <script>
+        $(document).ready(function (){
+
+            let editStatus = false;
+
+            $('#edit-profile-button').click(function (){
+              if(editStatus==false){
+                  $('#profile-detail').hide()
+                  $('#profile-edit').show()
+                  editStatus = true;
+
+                  $(this).text("Back")
+              }else{
+                  $('#profile-detail').show()
+                  $('#profile-edit').hide()
+                  editStatus = false
+
+                  $(this).text("Edit")
+              }
+            })
+        });
+    </script>
 
 </head>
 <body>
@@ -87,6 +110,21 @@
     </div>
 </nav>
 
+<%
+    Message message = (Message) session.getAttribute("message");
+    if(message != null){
+%>
+
+<div class="alert alert-danger" role="alert">
+    <%= message.getContent()%>
+</div>
+
+<%
+        session.removeAttribute("message");
+
+    }
+%>
+
 
 <div>
     <!-- Button trigger modal -->
@@ -107,7 +145,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">
                             <%= user.getName()%>
                         </h5>
-                        <div>
+                        <div id="profile-detail">
                             <table class="table">
 
                                 <tbody>
@@ -136,11 +174,56 @@
                                 </tbody>
                             </table>
                         </div>
+
+<%--                        profile edit--%>
+                        <div id="profile-edit" style="display: none">
+                            <h2 class="mt-2">Edit your profile</h2>
+                            <div>
+                                <form action="edit" method="post" enctype="multipart/form-data">
+                                    <table class="table">
+                                        <tr>
+                                            <td>ID : </td>
+                                            <td><%=user.getId()%></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Name : </td>
+                                            <td><input class="form-control" type="text" name="user_name" value="<%=user.getName()%>"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email : </td>
+                                            <td><input class="form-control" type="email" name="user_email" value="<%=user.getEmail()%>"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Password : </td>
+                                            <td><input class="form-control" type="password" name="user_password" value="<%=user.getPassword()%>"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gender : </td>
+                                            <td><%=user.getGender().toUpperCase()%></td>
+                                        </tr>
+                                        <tr>
+                                            <td>About : </td>
+                                            <td>
+                                                <textarea rows="3" class="form-control" name="user_about"><%=user.getAbout()%></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Change Profile:</td>
+                                            <td><input class="form-control" type="file" name="user_profile"/></td>
+                                        </tr>
+                                    </table>
+                                    <div class="container">
+                                        <button type="submit" class="btn btn-outline-success">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Edit</button>
+                    <button id="edit-profile-button" type="button" class="btn btn-primary">Edit</button>
                 </div>
             </div>
         </div>
