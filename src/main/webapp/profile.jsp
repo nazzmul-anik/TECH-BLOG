@@ -134,7 +134,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header primary-background text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">
+                    <h5 class="modal-title" id="exampleModalLabel0">
                         TechBlog
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -142,7 +142,7 @@
                 <div class="modal-body">
                     <div class="container text-center">
                         <img src="Profiles/<%=user.getProfile()%>" style="min-width: 150px; max-width: 150px;">
-                        <h5 class="modal-title" id="exampleModalLabel">
+                        <h5 class="modal-title" id="exampleModalLabel1">
                             <%= user.getName()%>
                         </h5>
                         <div id="profile-detail">
@@ -168,7 +168,7 @@
                                         <td><%=user.getAbout()%></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">Registered On : </th>
+                                        <th scope="row">Registered On: </th>
                                         <td><%=user.getRegistration_date()%></td>
                                     </tr>
                                 </tbody>
