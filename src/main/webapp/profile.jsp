@@ -1,5 +1,9 @@
 <%@ page import="org.anik.techblog.entities.User" %>
-<%@ page import="org.anik.techblog.entities.Message" %><%--
+<%@ page import="org.anik.techblog.entities.Message" %>
+<%@ page import="org.anik.techblog.dao.PostDao" %>
+<%@ page import="org.anik.techblog.helper.ConnectionProvider" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="org.anik.techblog.entities.Category" %><%--
   Created by IntelliJ IDEA.
   User: DCL
   Date: 8/6/2024
@@ -92,6 +96,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><span class="fa fa-address-card-o"></span> Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#add-post-modal"><span class="fa fa-paper-plane"></span> Add Post</a>
                 </li>
 
 
@@ -230,6 +237,62 @@
     </div>
 </div>
 
+<%--post modal--%>
+
+<div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="add-post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">What's on your mind...?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <select class="form-control">
+                            <option selected disabled>---Select Category---</option>
+                            <%
+                                PostDao postDao = new PostDao(ConnectionProvider.getConnection());
+                                ArrayList<Category> list = postDao.getAllCategories();
+                                for(Category category : list){
+                                    System.out.println(category.toString());
+                            %>
+                                <option><%=category.getName()%></option>
+                            <%
+                                }
+                            %>
+                        </select>
+                    </div>
+
+
+                    <form action="post" method="post">
+                        <div class="form-group">
+                            <input class="form-control" type="text" placeholder="Here, your title"/>
+                        </div>
+                        <div class="form-group">
+                            <textarea style="height: 100px" class="form-control" placeholder="Here, your content..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <textarea style="height: 100px" class="form-control" placeholder="Share your code...(if any)"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Select your photo</label><br>
+                            <input type="file"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><br>
+                    <button type="button" class="btn btn-primary">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
