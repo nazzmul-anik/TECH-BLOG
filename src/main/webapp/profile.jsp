@@ -252,47 +252,92 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="form-group">
-                        <select class="form-control">
-                            <option selected disabled>---Select Category---</option>
-                            <%
-                                PostDao postDao = new PostDao(ConnectionProvider.getConnection());
-                                ArrayList<Category> list = postDao.getAllCategories();
-                                for(Category category : list){
-                                    System.out.println(category.toString());
-                            %>
-                                <option><%=category.getName()%></option>
-                            <%
-                                }
-                            %>
-                        </select>
-                    </div>
+                    <form id="add-post-form" action="post" method="post">
 
-
-                    <form action="post" method="post">
                         <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Here, your title"/>
+                            <select class="form-control" name="categoryId">
+                                <option selected disabled>---Select Category---</option>
+                                <%
+                                    PostDao postDao = new PostDao(ConnectionProvider.getConnection());
+                                    ArrayList<Category> list = postDao.getAllCategories();
+                                    for(Category category : list){
+                                        System.out.println(category.toString());
+                                %>
+                                <option value="<%= category.getCid()%>"><%=category.getName()%></option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <input name="pTitle" class="form-control" type="text" placeholder="Here, your title"/>
                         </div>
                         <div class="form-group">
-                            <textarea style="height: 100px" class="form-control" placeholder="Here, your content..."></textarea>
+                            <textarea style="height: 100px" name="pContent" class="form-control" placeholder="Here, your content..."></textarea>
                         </div>
                         <div class="form-group">
-                            <textarea style="height: 100px" class="form-control" placeholder="Share your code...(if any)"></textarea>
+                            <textarea style="height: 100px" name="pCode" class="form-control" placeholder="Share your code...(if any)"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Select your photo</label><br>
-                            <input type="file"/>
+                            <input type="file" name="pic" />
+                        </div>
+                        <div class="container text-center">
+                            <button type="submit" class="btn btn-outline-primary">Post</button>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><br>
-                    <button type="button" class="btn btn-primary">Post</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function (){
+        let editStatus = false;
+
+        $('#edit-profile-button').click(function (){
+            if(editStatus == false){
+                $('#profile-detail').hide();
+                $('#profile-edit').show();
+                editStatus = true;
+                $(this).text("Back");
+            }else{
+                $('#profile-detail').show();
+                $('#profile-edit').hide();
+                editStatus = false;
+                $(this).text("Edit");
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function (e){
+        $('add-post-form').on("submit", function (event){
+            event.preventDefault();
+
+            console.log("You have form submitted");
+
+            let form  = new FormData(this);
+            $.ajax({
+               url: "post",
+               type: 'POST',
+               data: form,
+               success: function (data, textStatus, jqXHR){
+
+               },
+                error: function (jqXHR, textStatus, errorThrown){
+
+                },
+                processData: false,
+                contentType: false
+            });
+        });
+
+    });
+</script>
 
 </body>
 </html>
