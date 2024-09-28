@@ -132,6 +132,31 @@
     }
 %>
 
+<main>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-active active " aria-current="true" style="background-color: #009688">
+                        All Posts
+                    </a>
+                    <%
+                        PostDao dao = new PostDao(ConnectionProvider.getConnection());
+                        ArrayList<Category> categories = dao.getAllCategories();
+                        for(Category category : categories){
+
+                            %>
+                    <a href="#" class="list-group-item list-group-item-action"><%=category.getName()%></a>
+                    <%
+                    }
+                    %>
+                </div>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+    </div>
+</main>
+
 
 <div>
     <!-- Button trigger modal -->
