@@ -41,5 +41,14 @@
         <servlet-name>Edit</servlet-name>
         <url-pattern>/edit</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Post</servlet-name>
+        <servlet-class>org.anik.techblog.servlets.PostServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Post</servlet-name>
+        <url-pattern>/postForm</url-pattern>
+    </servlet-mapping>
     
 </web-app>

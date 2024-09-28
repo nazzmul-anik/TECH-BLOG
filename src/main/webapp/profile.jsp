@@ -252,18 +252,17 @@
                 </div>
                 <div class="modal-body">
 
-                    <form id="add-post-form" action="post" method="post">
+                    <form action="postForm" method="post" id="add-post-form">
 
                         <div class="form-group">
-                            <select class="form-control" name="categoryId">
+                            <select class="form-control" name="cid">
                                 <option selected disabled>---Select Category---</option>
                                 <%
                                     PostDao postDao = new PostDao(ConnectionProvider.getConnection());
                                     ArrayList<Category> list = postDao.getAllCategories();
                                     for(Category category : list){
-                                        System.out.println(category.toString());
                                 %>
-                                <option value="<%= category.getCid()%>"><%=category.getName()%></option>
+                                <option value="<%=category.getCid()%>"><%=category.getName()%></option>
                                 <%
                                     }
                                 %>
@@ -292,6 +291,7 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
     $(document).ready(function (){
@@ -315,21 +315,26 @@
 
 <script>
     $(document).ready(function (e){
-        $('add-post-form').on("submit", function (event){
+        $('#add-post-form').on("submit", function (event){
             event.preventDefault();
 
             console.log("You have form submitted");
 
             let form  = new FormData(this);
             $.ajax({
-               url: "post",
-               type: 'POST',
+               url: "postForm",
+               type: 'post',
                data: form,
                success: function (data, textStatus, jqXHR){
-
+                    console.log(data);
+                    if(data.trim()=="done"){
+                        swal("Good job!", "Save Post Successfully !!", "success");
+                    }else{
+                        swal("Error!", "Something went wrong! Try again.", "error");
+                    }
                },
                 error: function (jqXHR, textStatus, errorThrown){
-
+                    swal("Error!", "Something went wrong! Try agaain.", "error");
                 },
                 processData: false,
                 contentType: false

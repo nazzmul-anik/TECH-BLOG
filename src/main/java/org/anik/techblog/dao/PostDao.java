@@ -1,6 +1,7 @@
 package org.anik.techblog.dao;
 
 import org.anik.techblog.entities.Category;
+import org.anik.techblog.entities.Post;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,5 +37,26 @@ public class PostDao {
         }
 
         return list;
+    }
+
+    public boolean savePost(Post post){
+        boolean flag = false;
+        try{
+            String query = "insert into post(pTitle, pContent, pCode, pPic, catId, userId) values(?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, post.getpTitle());
+            preparedStatement.setString(2, post.getpContent());
+            preparedStatement.setString(3, post.getpCode());
+            preparedStatement.setString(4, post.getpPic());
+            preparedStatement.setInt(5, post.getCatId());
+            preparedStatement.setInt(6, post.getUserId());
+
+            preparedStatement.executeUpdate();
+            flag = true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return flag;
     }
 }

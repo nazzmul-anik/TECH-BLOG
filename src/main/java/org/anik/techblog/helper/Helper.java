@@ -20,6 +20,7 @@ public class Helper {
 
     public static boolean saveFile(InputStream inputStream, String path){
         boolean isSave = false;
+        System.out.println("Path : "+path);
 
         try{
             byte[] b = new byte[inputStream.available()];
