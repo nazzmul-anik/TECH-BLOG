@@ -152,7 +152,15 @@
                     %>
                 </div>
             </div>
-            <div class="col-md-8"></div>
+            <div class="col-md-8">
+                <div class="container text-center" id="loader">
+                    <i class="fa fa-refresh fa-3x fa-spin"></i>
+                    <h3 class="mt-2">Loading . . .</h3>
+                </div>
+                <div class="container-fluid" id="post-container">
+
+                </div>
+            </div>
         </div>
     </div>
 </main>
@@ -367,6 +375,21 @@
         });
 
     });
+</script>
+<script>
+    $(document).ready(function (e){
+        $.ajax({
+            url:"load_posts.jsp",
+            success: function (data, textStatus, jqXHR){
+                console.log(data);
+                setTimeout(function (){
+                    $("#loader").hide();
+                    $("#post-container").html(data);
+                }, 1000);
+
+            }
+        })
+    })
 </script>
 
 </body>
