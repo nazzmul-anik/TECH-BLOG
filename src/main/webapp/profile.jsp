@@ -137,7 +137,7 @@
         <div class="row mt-4">
             <div class="col-md-4">
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-active active " aria-current="true" style="background-color: #009688">
+                    <a href="#" onclick="getPosts(0, this)" class="c-link list-group-item list-group-item-active active" aria-current="true" style="background-color: #009688">
                         All Posts
                     </a>
                     <%
@@ -146,7 +146,7 @@
                         for(Category category : categories){
 
                             %>
-                    <a href="#" class="list-group-item list-group-item-action"><%=category.getName()%></a>
+                    <a href="#" onclick="getPosts(<%=category.getCid()%>, this)" class="c-link list-group-item list-group-item-action"><%=category.getName()%></a>
                     <%
                     }
                     %>
@@ -377,19 +377,27 @@
     });
 </script>
 <script>
-    $(document).ready(function (e){
+
+    function getPosts(catId, temp){
+        $("#loader").show();
+        $("#post-container").hide();
+        $(".c-link").removeClass("active");
         $.ajax({
             url:"load_posts.jsp",
+            data: {cid: catId},
             success: function (data, textStatus, jqXHR){
                 console.log(data);
-                setTimeout(function (){
                     $("#loader").hide();
+                    $("#post-container").show();
                     $("#post-container").html(data);
-                }, 1000);
-
+                    $(temp).addClass("active");
             }
-        })
-    })
+        });
+    }
+    $(document).ready(function (e){
+        let allPostRef = $('.c-link')[0]
+        getPosts(0, allPostRef);
+    });
 </script>
 
 </body>
