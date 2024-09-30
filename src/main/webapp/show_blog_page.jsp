@@ -3,7 +3,8 @@
 <%@ page import="org.anik.techblog.dao.PostDao" %>
 <%@ page import="org.anik.techblog.helper.ConnectionProvider" %>
 <%@ page import="org.anik.techblog.entities.Category" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Date" %><%--
   Created by IntelliJ IDEA.
   User: DCL
   Date: 9/30/2024
@@ -20,6 +21,7 @@
     int postId = Integer.parseInt(request.getParameter("post_id"));
     PostDao postDao = new PostDao(ConnectionProvider.getConnection());
     Post post = postDao.getPostByPostId(postId);
+    Date date = new Date();
 %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -36,6 +38,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="JavaScript/myJs.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .post-title{
+            font-weight: 100;
+            font-size: 30px;
+        }
+        .post-image{
+            width: 100%;
+            height: 400px;
+        }
+        .post-content{
+            font-weight: 100;
+            font-size: 25px;
+        }
+        .post-date{
+            font-style: italic;
+        }
+        .post-user-info{
+            font-weight: 100;
+            font-size: 20px;
+        }
+        .row-user{
+            border: 1px solid #009688;
+            padding-top: 15px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark primary-background">
@@ -47,7 +74,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#"><span class="fa fa-mortar-board"></span> Learn Coding with Us</a>
+                    <a class="nav-link active" aria-current="page" href="profile.jsp"><span class="fa fa-mortar-board"></span> Learn Coding with Us</a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -257,12 +284,23 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="card-header">
-                        <h4><%=post.getpTitle()%></h4>
+                        <h4 class="post-title"><%=post.getpTitle()%></h4>
                     </div>
                     <div class="card-body">
-                        <p><%=post.getpContent()%></p>
+                        <img class="card-img-top my-2 post-image" src="Blog_pic/<%=post.getpPic()%>" alt="Card image cap">
+                        <div class="row my-3 row-user">
+                            <div class="col-md-8">
+                                <p class="post-user-info"><a href="#!">XYZ</a> has Posted</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="post-date"><%=date.toString()%></p>
+                            </div>
+                        </div>
+                        <p class="post-content"><%=post.getpContent()%></p>
                         <br><br>
-                        <pre><%=post.getpCode()%></pre>
+                        <div class="post-code">
+                            <pre><%=post.getpCode()%></pre>
+                        </div>
                     </div>
                     <div class="card-footer text-center bg-light">
                         <a href="#!" class="btn btn-outline-success btn-sm"><i class="fa fa-thumbs-o-up"></i><span>1</span></a>
