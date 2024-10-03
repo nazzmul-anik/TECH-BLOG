@@ -36,6 +36,13 @@
     <script src="JavaScript/myJs.js" type="text/javascript"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <style>
+        /*body{*/
+        /*    background-image: url("Blog_pic/coding-screen.jpg");*/
+        /*    background-size: cover;*/
+        /*    background-attachment: fixed;*/
+        /*}*/
+    </style>
     <script>
         $(document).ready(function (){
 

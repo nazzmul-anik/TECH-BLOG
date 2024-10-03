@@ -4,7 +4,8 @@
 <%@ page import="org.anik.techblog.helper.ConnectionProvider" %>
 <%@ page import="org.anik.techblog.entities.Category" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Date" %><%--
+<%@ page import="java.util.Date" %>
+<%@ page import="org.anik.techblog.dao.UserDao" %><%--
   Created by IntelliJ IDEA.
   User: DCL
   Date: 9/30/2024
@@ -62,6 +63,11 @@
             border: 1px solid #009688;
             padding-top: 15px;
         }
+        /*body{*/
+        /*    background-image: url("Blog_pic/coding-screen.jpg");*/
+        /*    background-size: cover;*/
+        /*    background-attachment: fixed;*/
+        /*}*/
     </style>
 </head>
 <body>
@@ -279,7 +285,7 @@
 
 <%--    main content of the body--%>
 
-    <div class="container">
+    <div class="container back-side">
         <div class="row my-4">
             <div class="col-md-8 offset-md-2">
                 <div class="card">
@@ -290,7 +296,8 @@
                         <img class="card-img-top my-2 post-image" src="Blog_pic/<%=post.getpPic()%>" alt="Card image cap">
                         <div class="row my-3 row-user">
                             <div class="col-md-8">
-                                <p class="post-user-info"><a href="#!">XYZ</a> has Posted</p>
+                                <%UserDao userDao = new UserDao(ConnectionProvider.getConnection());%>
+                                <p class="post-user-info"><a href="#"><%=userDao.getUserByPostId(post.getUserId())%></a> has Posted</p>
                             </div>
                             <div class="col-md-4">
                                 <p class="post-date"><%=date.toString()%></p>

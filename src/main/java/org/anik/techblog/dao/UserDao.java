@@ -90,4 +90,35 @@ public class UserDao {
 
         return queryExecute;
     }
+
+    public String getUserByPostId(int userId){
+        User user = null;
+        String name = "";
+
+        try{
+            String query = "select *from user where id=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setGender(resultSet.getString("gender"));
+                user.setAbout(resultSet.getString("about"));
+                user.setRegistration_date(resultSet.getString("registration_date"));
+                user.setProfile(resultSet.getString("profile"));
+                name = user.getName();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(user.toString());
+
+
+        return name;
+    }
 }
