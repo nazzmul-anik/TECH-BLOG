@@ -21,8 +21,15 @@ public class LikeServlet extends HttpServlet {
 
         LikeDao likeDao = new LikeDao(ConnectionProvider.getConnection());
         if(operation.equals("like")){
-            boolean isLike = likeDao.insertLike(pid, uid);
-            out.println("true");
+
+            boolean alreadyLikedByUser =  likeDao.isLikedByUser(pid, uid);
+            if(alreadyLikedByUser == false){
+                likeDao.insertLike(pid, uid);
+                out.println("createLike");
+            }else{
+                likeDao.deleteLike(pid, uid);
+                out.println("deleteLike");
+            }
         }
     }
 }

@@ -313,7 +313,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-center bg-light">
-                        <a href="#!" onclick="doLike(<%=post.getPid()%>, <%=user.getId()%>);" class="btn btn-outline-success btn-sm"><i class="fa fa-thumbs-o-up"></i><span class="like-counter"><%=likeDao.countLikeOnPost(post.getPid())%></span></a>
+                        <a href="#!" onclick="doLike(<%=post.getPid()%>, <%=user.getId()%>);" class="btn btn-outline-success btn-sm"><i class="fa fa-thumbs-o-up"></i><span id="like-counter-<%=post.getPid()%>"><%=likeDao.countLikeOnPost(post.getPid())%></span></a>
                         <a href="#!" class="btn btn-outline-success btn-sm"><i class="fa fa-commenting-o"></i><span>1</span></a>
                     </div>
                 </div>

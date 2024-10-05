@@ -10,26 +10,22 @@ public class LikeDao {
         this.connection = connection;
     }
 
-    public boolean insertLike(int postId, int userId){
+    public void insertLike(int postId, int userId){
 
-        boolean isLike = false;
         try{
             String query = "insert into likes (postId, userId) values(?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, postId);
             preparedStatement.setInt(2, userId);
             preparedStatement.executeUpdate();
-            isLike = true;
+
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        return isLike;
     }
 
     public int countLikeOnPost(int postId){
         int count = 0;
-
         try{
             String query = "select count(*) from likes where postId=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -48,7 +44,6 @@ public class LikeDao {
 
     public boolean isLikedByUser(int postId, int userId){
         boolean isLike = false;
-
         try{
             String query = "select *from likes where postId=? and userId=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -64,19 +59,16 @@ public class LikeDao {
         return isLike;
     }
 
-    public boolean deleteLike(int postId, int userId){
-        boolean operation = false;
-
+    public void deleteLike(int postId, int userId){
             try {
-                String query = "delete from liks where postId = ? and userId=?";
+                String query = "delete from likes where postId=? and userId=?";
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setInt(1, userId);
-                preparedStatement.setFloat(2, postId);
+                preparedStatement.setInt(1, postId);
+                preparedStatement.setFloat(2, userId);
                 preparedStatement.executeUpdate();
-                operation = true;
+
             }catch (Exception e){
                 e.printStackTrace();
             }
-        return operation;
     }
 }
