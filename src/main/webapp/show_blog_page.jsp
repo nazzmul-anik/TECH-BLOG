@@ -5,7 +5,8 @@
 <%@ page import="org.anik.techblog.entities.Category" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="org.anik.techblog.dao.UserDao" %><%--
+<%@ page import="org.anik.techblog.dao.UserDao" %>
+<%@ page import="org.anik.techblog.dao.LikeDao" %><%--
   Created by IntelliJ IDEA.
   User: DCL
   Date: 9/30/2024
@@ -15,12 +16,14 @@
 <%@page errorPage="error_page.jsp" %>
 
 <%
+    PostDao postDao = new PostDao(ConnectionProvider.getConnection());
+    LikeDao likeDao = new LikeDao(ConnectionProvider.getConnection());
+
     User user = (User)session.getAttribute("currentUser");
     if(user == null){
         response.sendRedirect("login-page_jsp");
     }
     int postId = Integer.parseInt(request.getParameter("post_id"));
-    PostDao postDao = new PostDao(ConnectionProvider.getConnection());
     Post post = postDao.getPostByPostId(postId);
     Date date = new Date();
 %>
@@ -310,7 +313,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-center bg-light">
-                        <a href="#!" onclick="doLike(<%=post.getPid()%>, <%=user.getId()%>);" class="btn btn-outline-success btn-sm"><i class="fa fa-thumbs-o-up"></i><span>1</span></a>
+                        <a href="#!" onclick="doLike(<%=post.getPid()%>, <%=user.getId()%>);" class="btn btn-outline-success btn-sm"><i class="fa fa-thumbs-o-up"></i><span class="like-counter"><%=likeDao.countLikeOnPost(post.getPid())%></span></a>
                         <a href="#!" class="btn btn-outline-success btn-sm"><i class="fa fa-commenting-o"></i><span>1</span></a>
                     </div>
                 </div>

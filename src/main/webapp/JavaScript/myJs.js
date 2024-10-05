@@ -10,6 +10,11 @@ function doLike(postId, userId){
         url: "likePost",
         data: d,
         success: function (data, textStatus, jqXHR){
+            if(data.trim() == "true"){
+                let likeCount = $(".like-counter").html();
+                likeCount++;
+                $(".like-counter").html(likeCount);
+            }
         },
         error: function (jqXHR, textStatus, errorThrown){
         }
