@@ -393,7 +393,6 @@
             url:"load_posts.jsp",
             data: {cid: catId},
             success: function (data, textStatus, jqXHR){
-                console.log(data);
                     $("#loader").hide();
                     $("#post-container").show();
                     $("#post-container").html(data);

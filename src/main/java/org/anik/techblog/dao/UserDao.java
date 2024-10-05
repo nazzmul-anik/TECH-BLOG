@@ -13,9 +13,6 @@ public class UserDao {
 
         boolean queryExecuted = false;
 
-        System.out.println(user.getName() + " " + user.getRegistration_date());
-
-
         try{
 
             String query = "insert into user (name, email, password, gender, about, registration_date) values(?, ?, ?, ?, ?, ?)";
@@ -116,9 +113,7 @@ public class UserDao {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println(user.toString());
-
-
+        
         return name;
     }
 }

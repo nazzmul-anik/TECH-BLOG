@@ -51,4 +51,13 @@
         <url-pattern>/postForm</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>Like</servlet-name>
+        <servlet-class>org.anik.techblog.servlets.LikeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Like</servlet-name>
+        <url-pattern>/likePost</url-pattern>
+    </servlet-mapping>
+    
 </web-app>

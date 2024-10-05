@@ -17,18 +17,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
-        out.println("Login Page");
-
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        out.println(email+" "+password);
 
         UserDao userDao = new UserDao(ConnectionProvider.getConnection());
         User user = userDao.getUserByEmailAndPassword(email, password);
-        out.println(user);
 
         if(user == null){
-            out.println("Invalid details...try again.");
             Message message = new Message("Invalid Details! Try with another.", "error", "alert-danger");
 
             HttpSession session = req.getSession();
